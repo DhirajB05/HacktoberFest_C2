@@ -1,0 +1,341 @@
+/* TrailEar - Offline Birding Companion */
+/* Based on PRD/TRD from TrailEar PRD, TRD, User Flow and Architecture */
+
+:root {
+  --bg: #0a0a0f;
+  --bg-subtle: #12121a;
+  --fg: #e8e8f0;
+  --muted: #6b6b80;
+  --accent: #00d4aa;
+  --accent-dim: #00a88a;
+  --card: #1a1a24;
+  --border: #2a2a3a;
+  --error: #ff5f57;
+  --success: #00d4aa;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* Offline badge */
+.offline-badge {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.5rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+/* App container */
+.app {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 80px 20px 20px;
+}
+
+/* Views */
+.view {
+  display: none;
+  min-height: 400px;
+}
+
+.view.active {
+  display: block;
+}
+
+/* Home view */
+.home h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.home p {
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+.start-btn {
+  display: inline-block;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--bg);
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background 0.2s;
+}
+
+.start-btn:hover {
+  background: var(--accent-dim);
+}
+
+.last-session {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.last-session h3 {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+/* Setup view */
+.setup-grid {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.setup-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.setup-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.setup-btn {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.cue-options, .confidence-options {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.cue-options label, .confidence-options label {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  color: var(--fg);
+}
+
+.gps-btn {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--fg);
+  font-size: 0.875rem;
+}
+
+/* Live view */
+.live h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.live p {
+  color: var(--muted);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.timer {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 2rem 0;
+  color: var(--accent);
+}
+
+.latest-species {
+  font-size: 2rem;
+  text-align: center;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.latest-species.empty {
+  color: var(--muted);
+}
+
+.stop-btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--bg);
+  background: var(--error);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+/* Summary view */
+.summary-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.duration {
+  font-size: 1.25rem;
+  color: var(--muted);
+}
+
+.location {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.species-list {
+  margin: 1.5rem 0;
+}
+
+.species-list p {
+  color: var(--muted);
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.species-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.875rem;
+}
+
+.species-item .confidence {
+  background: var(--card);
+  padding: 0 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  min-width: 50px;
+  text-align: right;
+}
+
+.llm-summary {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  min-height: 80px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--fg);
+}
+
+.llm-summary.empty {
+  display: none;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+/* History view */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.history-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.history-item:hover {
+  background: var(--bg-subtle);
+}
+
+.history-item .date {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+.history-item .species {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+/* About view */
+.about-content {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.about-section h3 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: var(--accent);
+}
+
+.about-section ul {
+  list-style: none;
+}
+
+.about-section li {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.close-btn {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .app {
+    padding: 60px 10px 10px;
+  }
+}

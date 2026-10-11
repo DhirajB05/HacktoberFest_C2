@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrailEar - Offline Birding Companion</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Offline badge -->
+    <div class="offline-badge" aria-label="Offline: no data leaves device">
+      🌲 Offline
+    </div>
+
+    <!-- Home view -->
+    <section id="home" class="view active">
+      <h1>TrailEar</h1>
+      <p>Listen to birds, keep your eyes on the trail.</p>
+      
+      <button id="startBtn" class="start-btn" aria-label="Start a walking session">Start Walk</button>
+      
+      <div class="last-session">
+        <h3>Last Walk</h3>
+        <div id="lastSessionContent">
+          <p>No previous walks. Start your first walk!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Setup view (first time) -->
+    <section id="setup" class="view">
+      <h1>Setup</h1>
+      <p>Configure your walk settings</p>
+      
+      <div class="setup-grid">
+        <div class="setup-card">
+          <label class="setup-label">Microphone</label>
+          <button id="micBtn" class="setup-btn" disabled>Microphone ready</button>
+        </div>
+        
+        <div class="setup-card">
+          <label class="setup-label">Location</label>
+          <div class="location-control">
+            <button id="useGPSBtn" class="gps-btn">Use GPS location</button>
+            <input type="text" id="manualLat" placeholder="Latitude" class="manual-input">
+            <input type="text" id="manualLon" placeholder="Longitude" class="manual-input">
+          </div>
+        </div>
+        
+        <div class="setup-card">
+          <label class="setup-label">Cue Type</label>
+          <div class="cue-options">
+            <label><input type="radio" name="cue" value="tone" checked> Earbud tone</label>
+            <label><input type="radio" name="cue" value="vibration"> Phone vibration</label>
+          </div>
+        </div>
+        
+        <div class="setup-card">
+          <label class="setup-label">Confidence Level</label>
+          <div class="confidence-options">
+            <label><input type="radio" name="confidence" value="relaxed" class="confidence-radio"> Relaxed (0.3)</label>
+            <label><input type="radio" name="confidence" value="balanced" checked class="confidence-radio"> Balanced (0.5)</label>
+            <label><input type="radio" name="confidence" value="strict" class="confidence-radio"> Strict (0.7)</label>
+          </div>
+        </div>
+      </div>
+      
+      <button id="startWalkBtn" class="start-btn" aria-label="Start listening for bird calls">Start Listening</button>
+    </section>
+
+    <!-- Live listening view -->
+    <section id="live" class="view">
+      <h1>Listening...</h1>
+      <p>Place device safely. Look up when you hear a cue.</p>
+      
+      <div class="timer">00:00</div>
+      <div class="latest-species" id="latestSpecies">--</div>
+      
+      <button id="stopBtn" class="stop-btn" aria-label="Stop listening">Stop</button>
+    </section>
+
+    <!-- Walk summary view -->
+    <section id="summary" class="view">
+      <h1>Walk Summary</h1>
+      
+      <div class="summary-info">
+        <div class="duration" id="duration">00:00</div>
+        <div class="location" id="location">--</div>
+      </div>
+      
+      <div class="species-list" id="speciesList">
+        <p>No species detected.</p>
+      </div>
+      
+      <div class="llm-summary" id="llmSummary">Generating summary...</div>
+      
+      <div class="actions">
+        <button class="btn export" onclick="exportSession()">Export as JSON</button>
+        <button class="btn delete" onclick="deleteCurrentSession()">Delete Session</button>
+      </div>
+    </section>
+
+    <!-- History view -->
+    <section id="history" class="view">
+      <h1>Walk History</h1>
+      <p>Previous walks</p>
+      <div id="historyList">
+        <p>No walks yet. Start your first walk!</p>
+      </div>
+    </section>
+
+    <!-- About/Privacy view -->
+    <section id="about" class="view">
+      <h1>About & Privacy</h1>
+      
+      <div class="about-content">
+        <div class="about-section">
+          <h3>How TrailEar Works</h3>
+          <ul>
+            <li>All bird call detection happens locally on your device</li>
+            <li>No audio is recorded or transmitted</li>
+            <li>GPS location is stored optionally and only on your device</li>
+            <li>Session data lives in a local SQLite database</li>
+          </ul>
+        </div>
+        
+        <div class="about-section">
+          <h3>Models Used</h3>
+          <ul>
+            <li>BirdNET-Analyzer for bird call detection (local inference)</li>
+            <li>Gemma/Qwen/Llama via Ollama or llama.cpp for summaries (optional)</li>
+          </ul>
+        </div>
+        
+        <div class="about-section">
+          <h3>License</h3>
+          <p>BirdNET model weights carry a non-commercial license. This project is for personal, non-commercial use only.</p>
+          <button class="btn close-btn" onclick="hideAbout()">Close</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
